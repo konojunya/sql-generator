@@ -1,0 +1,33 @@
+{
+  "extends": "gts/tsconfig-google.json",
+  "compilerOptions": {
+    "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": false,
+    "declaration": false,
+    "declarationMap": false,
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "lib": ["ESNext"],
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "rootDir": "src",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@*": ["./*", "./node_modules"]
+    },
+    "types": ["@cloudflare/workers-types"]
+  },
+  "include": ["types/**/*.d.ts", "**/*.ts"],
+  "exclude": ["node_modules"]
+}

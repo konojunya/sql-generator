@@ -1,0 +1,29 @@
+{
+  "name": "sql-generator",
+  "version": "0.0.0",
+  "description": "AI-based SQL generator for Big Query",
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "run-s build serve",
+    "serve": "wrangler dev",
+    "tail": "wrangler tail",
+    "release": "wrangler deploy"
+  },
+  "keywords": [],
+  "author": "Junya Kono",
+  "license": "MIT",
+  "dependencies": {
+    "@hono/zod-openapi": "^0.7.2",
+    "hono": "^3.8.0",
+    "openapi": "^1.0.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231010.0",
+    "gts": "^5.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.13.1"
+  }
+}

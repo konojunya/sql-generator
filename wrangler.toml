@@ -1,0 +1,4 @@
+name = "sql-generator"
+main = "dist/index.js"
+compatibility_date = "2023-08-03"
+account_id = "<your account id>"
