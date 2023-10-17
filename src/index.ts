@@ -1,25 +1,32 @@
-import { Hono } from "hono";
-import { bearerAuth } from "hono/bearer-auth";
-import { OpenAI } from "./openai";
+import {Hono} from 'hono';
+import {bearerAuth} from 'hono/bearer-auth';
+import {OpenAI} from './openai';
 
-const app = new Hono();
+type Bindings = {
+  TOKEN: string;
+  OPENAI_API_KEY: string;
+};
+
+const app = new Hono<{Bindings: Bindings}>();
 const ai = new OpenAI();
 
 // health check
-app.get("/health", (c) => c.text("OK"));
+app.get('/health', c => c.text('OK'));
 
-app.post("/ai/*", async (c, next) => {
-  // TODO: want to add a type to Hono's c.env.
-  const bearer = bearerAuth({ token: c.env!["TOKEN"] as string });
+app.post('/ai/*', async (c, next) => {
+  const token = c.env.TOKEN;
+  const bearer = bearerAuth({token});
+
   return bearer(c, next);
 });
-app.post("/ai/query", async (c) => {
-  // TODO: want to add a type to Hono's c.env.
-  const apiKey = c.env!["OPENAI_API_KEY"] as string;
+app.post('/ai/query', async c => {
+  const API_KEY = c.env.OPENAI_API_KEY;
   const body = await c.req.text();
-  const message = await ai.createCompletion(apiKey, body);
+  ai.setupAPIKey(API_KEY);
 
-  return c.json({ message: message });
+  const message = await ai.createCompletion(body);
+
+  return c.json({message: message});
 });
 
 export default app;

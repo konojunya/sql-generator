@@ -1,4 +1,4 @@
-import ddl from "./ddl";
+import ddl from './ddl';
 
 interface OpenAIResponse {
   id: string;
@@ -8,9 +8,9 @@ interface OpenAIResponse {
   choices: {
     index: number;
     message: {
-      role: "user" | "system" | "assistant";
+      role: 'user' | 'system' | 'assistant';
       content: string;
-      finish_reason: "stop" | "max_tokens" | "timeout";
+      finish_reason: 'stop' | 'max_tokens' | 'timeout';
     };
   }[];
   usage: {
@@ -22,9 +22,9 @@ interface OpenAIResponse {
 export class OpenAI {
   private headers: Record<string, string>;
   private readonly promptBase: string = `あなたはSQLマスターです。Google Cloud の BigQuery を考慮して質問されたものに対して適切なSQLを返答してください。DDLは以下です。`;
-  private readonly baseURL = "https://api.openai.com/v1/chat/completions";
+  private readonly baseURL = 'https://api.openai.com/v1/chat/completions';
   private readonly settings = {
-    model: "gpt-3.5-turbo",
+    model: 'gpt-3.5-turbo',
     temperature: 1,
     max_tokens: 500,
     top_p: 1,
@@ -35,23 +35,22 @@ export class OpenAI {
   constructor() {
     this.promptBase += ddl;
     this.headers = {
-      "content-type": "application/json",
+      'content-type': 'application/json',
     };
   }
 
-  public async createCompletion(
-    apiKey: string,
-    prompt: string
-  ): Promise<string> {
-    this.headers["authorization"] = `Bearer ${apiKey}`;
+  public setupAPIKey(apiKey: string): void {
+    this.headers['authorization'] = `Bearer ${apiKey}`;
+  }
 
+  public async createCompletion(prompt: string): Promise<string> {
     const messages = [
-      { role: "system", content: this.promptBase },
-      { role: "user", content: prompt },
+      {role: 'system', content: this.promptBase},
+      {role: 'user', content: prompt},
     ];
 
     const res = await fetch(this.baseURL, {
-      method: "POST",
+      method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
         ...this.settings,

@@ -7,6 +7,7 @@
     "dev": "run-s build serve",
     "serve": "wrangler dev",
     "tail": "wrangler tail",
+    "format": "prettier --write ./src/**/*.ts",
     "release": "wrangler deploy"
   },
   "keywords": [],
