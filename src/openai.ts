@@ -19,6 +19,7 @@ interface OpenAIResponse {
     total_tokens: number;
   };
 }
+
 export class OpenAI {
   private headers: Record<string, string>;
   private readonly promptBase: string = `あなたはSQLマスターです。Google Cloud の BigQuery を考慮して質問されたものに対して適切なSQLを返答してください。DDLは以下です。`;
@@ -43,7 +44,7 @@ export class OpenAI {
     this.headers['authorization'] = `Bearer ${apiKey}`;
   }
 
-  public async createCompletion(prompt: string): Promise<string> {
+  public async ask(prompt: string): Promise<string> {
     const messages = [
       {role: 'system', content: this.promptBase},
       {role: 'user', content: prompt},

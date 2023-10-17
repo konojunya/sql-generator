@@ -24,7 +24,7 @@ app.post('/ai/query', async c => {
   const body = await c.req.text();
   ai.setupAPIKey(API_KEY);
 
-  const message = await ai.createCompletion(body);
+  const message = await ai.ask(body);
 
   return c.json({message: message});
 });
