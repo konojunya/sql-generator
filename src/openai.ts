@@ -39,12 +39,11 @@ export class OpenAI {
     };
   }
 
-  public async createCompletion(
-    apiKey: string,
-    prompt: string
-  ): Promise<string> {
+  public setupAPIKey(apiKey: string): void {
     this.headers['authorization'] = `Bearer ${apiKey}`;
+  }
 
+  public async createCompletion(prompt: string): Promise<string> {
     const messages = [
       {role: 'system', content: this.promptBase},
       {role: 'user', content: prompt},
